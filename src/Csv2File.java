@@ -34,6 +34,10 @@ public class Csv2File {
         File folder = new File("./names/" + encode(device.toLowerCase().trim()));
         folder.mkdirs();
         File targetFile = new File(folder, encode(model.toLowerCase().trim()) + ".json");
+        if (targetFile.exists()) {
+            System.out.println(targetFile.getName() + " exists, skip it.");
+            return;
+        }
         Writer writer = null;
         try {
             writer = new FileWriter(targetFile);
