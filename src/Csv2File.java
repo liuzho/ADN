@@ -31,21 +31,28 @@ public class Csv2File {
 
 
     private static void writeToFile(String device, String model, String deviceName) throws IOException {
+        String json = "{" +
+                "\"device\":\"" + encode(device.trim()) + "\"," +
+                "\"model\":\"" + encode(model.trim()) + "\"," +
+                "\"name\":\"" + encode(deviceName.trim()) + "\"" +
+                "}";
         File folder = new File("./names/" + encode(device.toLowerCase().trim()));
         folder.mkdirs();
         File targetFile = new File(folder, encode(model.toLowerCase().trim()) + ".json");
         if (targetFile.exists()) {
-            System.out.println(targetFile.getName() + " exists, skip it.");
+            BufferedReader reader = new BufferedReader(new FileReader(targetFile));
+            String existsContent = reader.readLine();
+            if (!json.equals(existsContent)) {
+                System.out.println(targetFile.getAbsolutePath() + " different!");
+                System.out.println("old: " + existsContent);
+                System.out.println("new: " + json);
+            }
+//            System.out.println(targetFile.getName() + " exists, skip it.");
             return;
         }
         Writer writer = null;
         try {
             writer = new FileWriter(targetFile);
-            String json = "{" +
-                    "\"device\":\"" + encode(device.trim()) + "\"," +
-                    "\"model\":\"" + encode(model.trim()) + "\"," +
-                    "\"name\":\"" + encode(deviceName.trim()) + "\"" +
-                    "}";
             writer.write(json);
         } finally {
             close(writer);
