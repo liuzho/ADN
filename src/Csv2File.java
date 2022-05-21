@@ -42,13 +42,14 @@ public class Csv2File {
         if (targetFile.exists()) {
             BufferedReader reader = new BufferedReader(new FileReader(targetFile));
             String existsContent = reader.readLine();
+            reader.close();
             if (!json.equals(existsContent)) {
                 System.out.println(targetFile.getAbsolutePath() + " different!");
                 System.out.println("old: " + existsContent);
                 System.out.println("new: " + json);
             }
 //            System.out.println(targetFile.getName() + " exists, skip it.");
-            return;
+//            return;
         }
         Writer writer = null;
         try {
