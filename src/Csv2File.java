@@ -31,11 +31,18 @@ public class Csv2File {
 
 
     private static void writeToFile(String device, String model, String deviceName) throws IOException {
+        if (deviceName.isBlank()) {
+            return;
+        }
         String json = "{" +
                 "\"device\":\"" + encode(device.trim()) + "\"," +
                 "\"model\":\"" + encode(model.trim()) + "\"," +
                 "\"name\":\"" + encode(deviceName.trim()) + "\"" +
                 "}";
+        if (device.isBlank() || model.isBlank() || deviceName.isBlank()) {
+            System.out.println("invalidate data(empty content): " + json);
+            return;
+        }
         File folder = new File("./names/" + encode(device.toLowerCase().trim()));
         folder.mkdirs();
         File targetFile = new File(folder, encode(model.toLowerCase().trim()) + ".json");
