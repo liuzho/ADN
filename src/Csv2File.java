@@ -57,8 +57,8 @@ public class Csv2File {
                     System.out.println("new: " + json);
                 }
             }
-//            System.out.println(targetFile.getName() + " exists, skip it.");
-//            return;
+            System.out.println(targetFile.getName() + " exists, skip it.");
+            return;
         }
         Writer writer = null;
         try {
